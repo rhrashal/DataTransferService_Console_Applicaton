@@ -10,11 +10,15 @@ namespace DataTransferService
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             /// https://stackoverflow.com/questions/13019433/calling-a-method-every-x-minutes
-            
-            Console.WriteLine("Wellcome  Data Transfer Service. Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            /// 
+
+
+
+            Console.WriteLine("*************** Wellcome  Data Transfer Service. Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + "***************");
             var time = ConfigurationManager.AppSettings["excuteDuration"];
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromMinutes(5);
@@ -48,7 +52,7 @@ namespace DataTransferService
                 }
                 else
                 {
-                    Console.WriteLine("New Sale Data Not Found at "+DateTime.Now.ToShortTimeString()+".  \n");
+                    Console.WriteLine("New Sale Data Not Found at "+DateTime.Now.ToShortTimeString());
                 }                
                 if (isSave)
                 {
@@ -58,14 +62,14 @@ namespace DataTransferService
                 /// save summary data data
                 /// 
                 bool isSaveSummary = false;
-                if (summryDt.Rows.Count>0)
+                if (summryDt.Rows.Count > 0)
                 {
                     isSaveSummary = summary.SetData(summryDt);
                 }
                 else
                 {
-                    Console.WriteLine("New Summary Data Not Found at " + DateTime.Now.ToShortTimeString() + ".  \n");
-                }                    
+                    Console.WriteLine("New Summary Data Not Found at " + DateTime.Now.ToShortTimeString());
+                }
                 if (isSaveSummary)
                 {
                     summary.UpdateData();
