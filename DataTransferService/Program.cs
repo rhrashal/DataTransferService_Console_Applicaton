@@ -13,6 +13,8 @@ namespace DataTransferService
         static void Main(string[] args)
         {
             /// https://stackoverflow.com/questions/13019433/calling-a-method-every-x-minutes
+            
+            Console.WriteLine("Wellcome  Data Transfer Service. Version: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
             var time = ConfigurationManager.AppSettings["excuteDuration"];
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromMinutes(5);
