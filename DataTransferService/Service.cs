@@ -32,13 +32,13 @@ namespace DataTransferService
                     da.SelectCommand.CommandTimeout = 0;
                     da.Fill(dataTable);
 
-                    //Console.WriteLine("Succesfully Selected \n");
+                    Console.WriteLine(dataTable.Rows.Count + " Sale Data found ");
                    
                 }
             }
             catch (Exception exp)
             {
-                Console.Write(exp.Message + " \n");
+                Console.WriteLine(exp.Message );
                 
             }
             finally
@@ -56,10 +56,12 @@ namespace DataTransferService
         [STAThread]
         public bool SetData(DataTable dt)
         {
+            string debugQuery = "";
             bool res = false;
             SqlConnection conn = new SqlConnection(to_connection);
             try
             {
+                int count = 1;
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandTimeout = 0;
                 cmd.Connection = conn;
@@ -67,11 +69,11 @@ namespace DataTransferService
                 conn.Open();
                 if (conn.State == ConnectionState.Open)
                 {
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append(@" INSERT INTO [dbo].[Sale" + DateTime.Now.Year + DateTime.Now.Month.ToString("00") + "] ([CmpIDX] ,[Invoice] ,[SaleDT] ,[sBarCode] ,[BarCode] ,[SKU] ,[SupID] ,[SupName] ,[GroupName] ,[PrdName] ,[BTName] ,[SSName] ,[Qty] ,[CPU] ,[RPU] ,[wsp] ,[wsq] ,[SQty] ,[rQty] ,[rAmt] ,[cInvoice] ,[ShopID] ,[PayType] ,[Discount] ,[DiscAmt] ,[DiscAmtPrd] ,[VAT] ,[PrdSlNo] ,[UserID] ,[CardName] ,[CardNo] ,[CounterID] ,[PrvCusID] ,[CusName] ,[VATPrcnt] ,[DiscPrcnt] ,[Returned] ,[Flag] ,[MrCode] ,[Point] ,[TSEC] ,[Posted] ,[Ref] ,[IsTransfer] ) VALUES ");
-
+                    
                     foreach (DataRow row in dt.Rows)
                     {
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append(@" INSERT INTO [dbo].[Sale" + DateTime.Now.Year + DateTime.Now.Month.ToString("00") + "] ([CmpIDX] ,[Invoice] ,[SaleDT] ,[sBarCode] ,[BarCode] ,[SKU] ,[SupID] ,[SupName] ,[GroupName] ,[PrdName] ,[BTName] ,[SSName] ,[Qty] ,[CPU] ,[RPU] ,[wsp] ,[wsq] ,[SQty] ,[rQty] ,[rAmt] ,[cInvoice] ,[ShopID] ,[PayType] ,[Discount] ,[DiscAmt] ,[DiscAmtPrd] ,[VAT] ,[PrdSlNo] ,[UserID] ,[CardName] ,[CardNo] ,[CounterID] ,[PrvCusID] ,[CusName] ,[VATPrcnt] ,[DiscPrcnt] ,[Returned] ,[Flag] ,[MrCode] ,[Point] ,[TSEC] ,[Posted] ,[Ref] ,[IsTransfer] ) VALUES ");
                         sb.Append("( '" + row["CmpIDX"].ToString() + "',");
                         sb.Append(" '" + row["Invoice"].ToString() + "',");
                         sb.Append(" '" + row["SaleDT"].ToString() + "',");
@@ -115,21 +117,24 @@ namespace DataTransferService
                         sb.Append(" '" + row["TSEC"].ToString() + "',");
                         sb.Append(" '" + row["Posted"].ToString() + "',");
                         sb.Append(" '" + row["Ref"].ToString() + "',");
-                        sb.Append(" '" + row["IsTransfer"].ToString() + "'),");                        
+                        sb.Append(" '" + row["IsTransfer"].ToString() + "') ");
+                        cmd.CommandText = sb.ToString();
+                        debugQuery = sb.ToString();
+                        cmd.ExecuteScalar();
+                        Console.WriteLine(count++);
                     }
-                    sb.Remove(sb.Length - 1, 1);  
-                    cmd.CommandText = sb.ToString();
-
-                    cmd.ExecuteScalar();
+                    
+                  
                     res = true;
-                    Console.WriteLine(dt.Rows.Count + " data succesfully inserted at " + DateTime.Now.ToShortTimeString() + " \n");
+                    Console.WriteLine(dt.Rows.Count + " data succesfully inserted at " + DateTime.Now.ToShortTimeString() );
 
                 }
             }
             catch (Exception exp)
             {
                 res = false;
-                Console.Write(exp.Message + " \n");
+                Console.WriteLine(exp.Message );
+                Console.WriteLine(debugQuery);
 
             }
             finally
@@ -168,7 +173,7 @@ namespace DataTransferService
             }
             catch (Exception exp)
             {
-                Console.Write(exp.Message + " \n");
+                Console.WriteLine(exp.Message );
 
             }
             finally
@@ -205,13 +210,13 @@ namespace DataTransferService
                     da.SelectCommand.CommandTimeout = 0;
                     da.Fill(dataTable);
 
-                    //Console.WriteLine("Succesfully Selected \n");
+                    Console.WriteLine(dataTable.Rows.Count + " Summary Data found ");
 
                 }
             }
             catch (Exception exp)
             {
-                Console.Write(exp.Message + " \n");
+                Console.WriteLine(exp.Message + " \n");
 
             }
             finally
@@ -229,10 +234,13 @@ namespace DataTransferService
         [STAThread]
         public bool SetData(DataTable dt)
         {
+            string debugQuery = "";
             bool res = false;            
             SqlConnection conn = new SqlConnection(to_connection);
             try
             {
+                
+                int count = 1;
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandTimeout = 0;
                 cmd.Connection = conn;
@@ -240,11 +248,12 @@ namespace DataTransferService
                 conn.Open();
                 if (conn.State == ConnectionState.Open)
                 {
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append(@" INSERT INTO [dbo].[SSummary] ([Invoice],[SaleDT],[TotalCost],[TotalAmt],[Discount],[DiscAmt],[VAT],[NetAmt],[CshAmt],[CrdAmt],[PayType],[UserID],[ShopID],[CardName],[CardNo],[CounterID],[PrvCusID],[CusName],[ReturnedAmt],[rTotalCost],[rVATAmt],[rDiscAmt],[rTotalAmt],[cInvoice],[ReturnedType],[Flag],[PaidAmt],[ChangeAmt],[Point],[MrCode],[TSEC],[advamt],[advslip],[Ref],[RefNO],[DiscType],[AutoID] ) VALUES ");
-
+                   
                     foreach (DataRow row in dt.Rows)
                     {
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append(@" INSERT INTO [dbo].[SSummary] ([Invoice],[SaleDT],[TotalCost],[TotalAmt],[Discount],[DiscAmt],[VAT],[NetAmt],[CshAmt],[CrdAmt],[PayType],[UserID],[ShopID],[CardName],[CardNo],[CounterID],[PrvCusID],[CusName],[ReturnedAmt],[rTotalCost],[rVATAmt],[rDiscAmt],[rTotalAmt],[cInvoice],[ReturnedType],[Flag],[PaidAmt],[ChangeAmt],[Point],[MrCode],[TSEC],[advamt],[advslip],[Ref],[RefNO],[DiscType] ) VALUES ");
+
                         sb.Append("( '" + row["Invoice"].ToString() + "',");
                         sb.Append(" '" + row["SaleDT"].ToString() + "',");
                         sb.Append(" '" + row["TotalCost"].ToString() + "',");
@@ -279,25 +288,24 @@ namespace DataTransferService
                         sb.Append(" '" + row["advamt"].ToString() + "',");
                         sb.Append(" '" + row["advslip"].ToString() + "',");
                         sb.Append(" '" + row["Ref"].ToString() + "',");
-                        //sb.Append(" '" + row["IsTransfer"].ToString() + "',");
                         sb.Append(" '" + row["RefNO"].ToString() + "',");
-                        sb.Append(" '" + row["DiscType"].ToString() + "',");
-                        sb.Append(" '" + row["AutoID"].ToString() + "'),");
+                        sb.Append(" '" + row["DiscType"].ToString() + "')");                        
+                        cmd.CommandText = sb.ToString();
+                        debugQuery = sb.ToString();
+                        cmd.ExecuteScalar();
+                        Console.WriteLine(count++);
                     }
-                    sb.Remove(sb.Length - 1, 1);
-                    cmd.CommandText = sb.ToString();
-
-                    cmd.ExecuteScalar();
+                          
                     res = true;
-                    Console.WriteLine(dt.Rows.Count + " data succesfully inserted at "+ DateTime.Now.ToShortTimeString() + " \n");
+                    Console.WriteLine(dt.Rows.Count + " data succesfully inserted at "+ DateTime.Now.ToShortTimeString() );
 
                 }
             }
             catch (Exception exp)
             {
                 res = false;
-                Console.Write(exp.Message + " \n");
-
+                Console.WriteLine(exp.Message );
+                Console.WriteLine( debugQuery);
             }
             finally
             {
@@ -333,7 +341,7 @@ namespace DataTransferService
             }
             catch (Exception exp)
             {
-                Console.Write(exp.Message + " \n");
+                Console.WriteLine(exp.Message );
 
             }
             finally
