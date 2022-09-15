@@ -1,4 +1,4 @@
-# DataTransferService_Console_Applicaton
+# Data Transfer Service
 
 ### repeat call method : 
 https://stackoverflow.com/questions/13019433/calling-a-method-every-x-minutes
