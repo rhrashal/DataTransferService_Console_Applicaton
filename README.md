@@ -6,3 +6,6 @@
 
 ### log4net : 
     https://stackify.com/log4net-guide-dotnet-logging/
+
+### show/hide cmd  
+    https://stackoverflow.com/questions/3571627/show-hide-the-console-window-of-a-c-sharp-console-application 
