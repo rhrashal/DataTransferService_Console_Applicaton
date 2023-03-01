@@ -30,6 +30,25 @@ namespace DataTransferService
         static void Main(string[] args)
         {
            
+              #region i want to stop create multiple instance of console application
+
+            bool createdNew;
+            string mutexName = "MyConsoleAppMutex";
+            Mutex mutex = new Mutex(true, mutexName, out createdNew);
+
+            if (!createdNew)
+            {
+                // Another instance of the application is already running,
+                // so we should exit this instance.
+                Console.WriteLine("Another instance of the application is already running.");
+                log.Info("Another instance of the application is already running. at " + DateTime.Now.ToShortTimeString());
+                return;
+            }
+
+            // Your application code goes here...
+
+            mutex.ReleaseMutex();
+            #endregion
 
             //log.Info("Hello logging world!   Info");
             //log.Debug("Hello logging world!   Debug");
